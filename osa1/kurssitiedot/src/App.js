@@ -7,7 +7,7 @@ const Header = (props) => {
   )
 }
 const Content = (props) => {
-  // console.log(props.parts[0])
+  console.log(props.parts[0])
   return (
     <div>
      
@@ -20,16 +20,16 @@ const Content = (props) => {
 }
 
 const Part = (props)=>{
-  // console.log(props.part)
+  console.log(props.part)
   return(
     <>
-    <p>{props.part.part} {props.part.exercises}</p>
+    <p>{props.part.nimi} {props.part.exercises}</p>
     </>
   )
 }
 
 const Total = (props) => {
-  // console.log(props.parts[0].exercises + props.parts[1].exercises+props.parts[2].exercises)
+  console.log(props.parts[0].exercises + props.parts[1].exercises+props.parts[2].exercises)
   return (
     <div>
      <p>
@@ -44,15 +44,15 @@ const App = () => {
     name: 'Half Stack application development',
     parts: [
         {
-            part: 'Fundamentals of React',
+            nimi: 'Fundamentals of React',
             exercises: 10
         },
         {
-            part: 'Using props to pass data',
+            nimi: 'Using props to pass data',
             exercises: 7
         },
         {
-            part: 'State of a component',
+            nimi: 'State of a component',
             exercises: 14
         }
     ]
