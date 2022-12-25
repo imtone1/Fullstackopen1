@@ -1,9 +1,9 @@
 
 const Header = (props) => {
-    // console.log(props.course)
+    console.log("header",props.course)
     return (
       <div>
-        <h1>{props.course}</h1>
+        <h2>{props.course}</h2>
       </div>
     )
   }
