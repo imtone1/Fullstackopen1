@@ -11,7 +11,9 @@ return(
 const StatisticLine=({value, text})=>{
 return(
   <>
-  <p>{text} {value}</p>
+  <tr>
+  <td>{text} {value}</td>
+  </tr>
   </>
 )
 }
@@ -33,12 +35,21 @@ if(all===0){
   return(
    
   <div>
+    <table>
+      <thead>
+      <tr>
+        <th>statistics</th>
+      </tr>
+    </thead>
+    <tbody>
       <StatisticLine text="good" value ={good} />
       <StatisticLine text="neutral" value ={neutral} />
       <StatisticLine text="bad" value ={bad} />
-      <StatisticLine text="all" value={average}/>
+      <StatisticLine text="all" value={all}/>
       <StatisticLine text="average" value={average}/>
       <StatisticLine text="positive" value={positive}/>
+      </tbody>
+      </table>
     </div>  
   )
 }
