@@ -7,10 +7,17 @@ const Statistics=({good, neutral, bad})=>{
   let badAverage=bad*-1
   let average=(good+neutralAverage+badAverage)/all
   let positive=(good/all)*100
-
+if(all===0){
   return(
     <>
-  <h2>statistics</h2>
+    <h2>statistics</h2>
+    <p>No feedback given</p>
+    </>
+  )
+}
+  return(
+    <>
+  
   <p>good {good}</p>
   <p>neutral {neutral}</p>
   <p>bad {bad}</p>
