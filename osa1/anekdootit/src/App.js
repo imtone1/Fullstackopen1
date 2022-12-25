@@ -27,14 +27,22 @@ const App = () => {
     }
   // console.log(anecdotes.length)
   // console.log(getRandomInt())
+  // console.log(points)
+  let i = points.indexOf(Math.max(...points));
+  // console.log(i)
 
   return (
     <div>
+      <h2>Anecdote of the day</h2>
       {anecdotes[selected]}
       <p>has {points[selected]} votes</p>
       <div>
         <button onClick={()=>voteAnecdote()}>vote</button>
       <button onClick={()=> setSelected(getRandomInt())}>next anecdote</button></div>
+
+      <h2>Anecdote with most votes</h2>
+      <p>{anecdotes[i]}</p>
+      <p>has {points[i]} votes</p>
     </div>
   )
 }
