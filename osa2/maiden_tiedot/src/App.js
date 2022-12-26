@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Country from './components/Country'
 
 function App() {
   const [countries, setCountry] = useState([])
   const [newFilter, setNewFilter] = useState('')
+  const [showCountry, setShowCountry]=useState(false)
+  const [country, setCountry1] = useState('')
   
   useEffect(() => {
     console.log('effect')
@@ -11,7 +14,7 @@ function App() {
       .get('https://restcountries.com/v3.1/all')
       .then(response => {
         // console.log('promise fulfilled')
-        // console.log(response.data)
+        console.log(response.data)
         setCountry(response.data)
       })
   }, [])
@@ -19,8 +22,14 @@ function App() {
   const handleFilterChange=(event)=>{
     // console.log(event.target.value)
     setNewFilter(event.target.value.toLowerCase())
+    
   }
-
+  const handleCountry=(country)=>{
+    console.log("buttonissa",country)
+    setShowCountry(!showCountry)
+    setCountry1(country)
+    
+  }
   const searchMatches =
   countries.filter(country =>
     country.name.common.toLowerCase().includes(newFilter.toLowerCase()))
@@ -29,30 +38,31 @@ function App() {
 
     if (searchMatches.length > 1 && searchMatches.length < 11) {
 
-        return (searchMatches.map(country => <p key={country.name.common}> {country.name.common}</p>))
+        return (searchMatches.map(country => {
+         
+        return(
+        <div key={country.name.official}>
+        <p > {country.name.common}</p>
+        <button onClick={()=>handleCountry(country)}>show</button>
+        </div>
+       ) 
+       
+       })
+       )
     }
-    else if (searchMatches.length > 10) {
-        return ('Too many matches, specify another filter')
+    else if (searchMatches.length > 10) 
+    {
+        return (
+          
+          <p>Too many matches, specify another filter</p>)
 
     }
     else if (searchMatches.length ===1){
         return (
           
           searchMatches.map(country => 
-        <div key={country.name.common}>
-          <h2>{country.name.common}</h2>
-          <p>capital {country.capital[0]}</p>
-          <p>area {country.area}</p>
-          <h4>languages</h4>
-          <ul>
-          {Object.entries(country.languages).map(([key,value])=>{
-          return (
-              <li key={key}>{value.toString()}</li>
-          );
-        })}
-          </ul>
-          <img src={country.flags.png} alt="flag" />
-          </div>)
+            <Country country={country} key={country.name.common}/>
+       )
           )
     }
 }
@@ -64,6 +74,8 @@ function App() {
         onChange={handleFilterChange}/>
         </div>
  {elementCountries()}
+ 
+ {showCountry ? <Country country={country} key={country.name.common}/> :"" }
     </div>
   );
   
