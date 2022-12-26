@@ -7,6 +7,9 @@ function App() {
   const [newFilter, setNewFilter] = useState('')
   const [showCountry, setShowCountry]=useState(false)
   const [country, setCountry1] = useState('')
+  const [countryName, setCountryName] = useState('')
+ 
+const api_key=process.env.REACT_APP_API_KEY
   
   useEffect(() => {
     console.log('effect')
@@ -19,6 +22,10 @@ function App() {
       })
   }, [])
 
+
+  console.log("api key",api_key)
+
+
   const handleFilterChange=(event)=>{
     // console.log(event.target.value)
     setNewFilter(event.target.value.toLowerCase())
@@ -28,8 +35,12 @@ function App() {
     console.log("buttonissa",country)
     setShowCountry(!showCountry)
     setCountry1(country)
+    setCountryName(countryName)
+    
+ 
     
   }
+
   const searchMatches =
   countries.filter(country =>
     country.name.common.toLowerCase().includes(newFilter.toLowerCase()))
