@@ -9,13 +9,27 @@ const App = () => {
   const addNewPerson=(event)=>{
     event.preventDefault()
     // console.log("form target",event.target)
+    let found=false
+    persons.map(person=>{
+      if (person?.name===newName)
+      {
+        found=true
+      }
+    
+    
+    })
+    if (found){
+      alert(`${newName} is already added to phonebook`)
+    }
+    else{
     const personObject={
       name: newName
     }
+    
     setPersons(persons.concat(personObject))
     setNewName('')
   }
-
+}
   const handlePersonChange=(event)=>{
     console.log(event.target.value)
     setNewName(event.target.value)
