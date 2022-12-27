@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import ErrorMessage from './components/ErrorMessage'
 import Filter from './components/Filter'
 import PersonsForm from './components/PersonForm'
 import Person from './components/Persons'
@@ -14,6 +15,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
   const [newFilter, setNewFilter] = useState('')
+  const [message, setMessage] = useState(null)
+  const [kind, setKind] = useState('')
  
 
   useEffect(() => {
@@ -60,10 +63,16 @@ const App = () => {
     personservice
     .create(personObject)
     .then(createdPerson => {
+      setMessage(`Added ${createdPerson.name}`)
+      setKind('success')
+      console.log("message on ",message)
       setPersons(persons.concat(createdPerson))
       setNewName('')
       setNewPhone('')
       setNewFilter('')
+      
+      setTimeout(()=>{setMessage(null)},5000)
+      
     })   
   }
 }
@@ -82,7 +91,17 @@ const deletePerson=(id, event)=>{
     setNewName('')
     setNewPhone('')
     setNewFilter('')
-  }) 
+  })
+  .catch(error => {
+    setMessage(
+      `Information of ${person.name} has already removed from server`
+    )
+    setKind('error')
+    setTimeout(() => {
+      setMessage(null)
+    }, 5000)
+    setPersons(persons.filter(n => n.id !== id))
+  })
     }
   
 }
@@ -102,6 +121,7 @@ const deletePerson=(id, event)=>{
   return (
     <div>
       <h2>Phonebook</h2>
+      <ErrorMessage message={message} kind={kind}/>
      <Filter newFilter={newFilter} handleFilterChange={handleFilterChange}/>
      <h2>add a new</h2>
      <PersonsForm addNewPerson={addNewPerson} handlePersonChange={handlePersonChange} handlePhoneChange={handlePhoneChange} newName={newName} newPhone={newPhone}/>
