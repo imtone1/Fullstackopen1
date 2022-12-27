@@ -14,7 +14,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
   const [newFilter, setNewFilter] = useState('')
-  const [delId, setdelId] = useState('')
+ 
 
   useEffect(() => {
     console.log('effect')
@@ -33,7 +33,22 @@ const App = () => {
     event.preventDefault()
 
     if (person){
-      alert(`${newName} is already added to phonebook`)
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){
+        // alert(`${newName} is already added to phonebook`)
+          const personId=persons.find(p=>p.id ===person.id)
+          const changedNumber={...personId, number:newPhone}
+
+          console.log(personId)
+
+          personservice
+          .update(personId.id,changedNumber)
+          .then(updatedNumber => {
+            setPersons(persons.map(p=>p.id !==personId.id ? p: updatedNumber))
+            setNewName('')
+            setNewPhone('')
+            setNewFilter('')
+          })
+  }
     }
     else{
     const personObject={
@@ -83,10 +98,6 @@ const deletePerson=(id, event)=>{
     console.log(event.target.value)
     setNewFilter(event.target.value.toLowerCase())
   }
-  const handleId=(event)=>{
-    // console.log(event.target.value)
-    setdelId(event.target.value)
-  }
   
   return (
     <div>
@@ -95,7 +106,7 @@ const deletePerson=(id, event)=>{
      <h2>add a new</h2>
      <PersonsForm addNewPerson={addNewPerson} handlePersonChange={handlePersonChange} handlePhoneChange={handlePhoneChange} newName={newName} newPhone={newPhone}/>
       <h2>Numbers</h2>
-    <Person persons={persons} newFilter={newFilter} deletePerson={deletePerson} handleId={handleId}/>
+    <Person persons={persons} newFilter={newFilter} deletePerson={deletePerson}/>
        
     </div>
   )
