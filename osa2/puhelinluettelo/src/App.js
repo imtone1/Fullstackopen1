@@ -25,6 +25,7 @@ const App = () => {
       })
   }, [])
 
+
   const person = persons.find(person => person.name.toLowerCase() === newName.toLowerCase())
 
   const addNewPerson=(event)=>{
@@ -40,10 +41,14 @@ const App = () => {
 
     }
     
-    setPersons(persons.concat(personObject))
-    setNewName('')
-    setNewPhone('')
-    setNewFilter('')
+    axios
+    .post('http://localhost:3001/persons', personObject)
+    .then(response => {
+      setPersons(persons.concat(response.data))
+      setNewName('')
+      setNewPhone('')
+      setNewFilter('')
+    })   
   }
 }
   const handlePersonChange=(event)=>{
