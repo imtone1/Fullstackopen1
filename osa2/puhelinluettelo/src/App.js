@@ -65,7 +65,7 @@ const App = () => {
     .then(createdPerson => {
       setMessage(`Added ${createdPerson.name}`)
       setKind('success')
-      console.log("message on ",message)
+      // console.log("message on ",message)
       setPersons(persons.concat(createdPerson))
       setNewName('')
       setNewPhone('')
@@ -73,7 +73,11 @@ const App = () => {
       
       setTimeout(()=>{setMessage(null)},5000)
       
-    })   
+    }).catch(error=>{
+      console.log(error.response.data)
+      setMessage(error.response.data.error)
+      setKind('error')
+    })  
   }
 }
 
